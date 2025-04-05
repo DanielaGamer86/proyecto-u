@@ -44,11 +44,11 @@
 
 - El recuadro gris es la introduccion a la pagina, donde va a ver toda la informacion.
 
-### Morado representan todas las interfaces graficas presentes en la pagina empezando en orden.
+##### Morado representan todas las interfaces graficas presentes en la pagina empezando en orden.
 
-### Amarillo es toda la informacion en la que se va a ingresar en los interfaces graficos
+##### Amarillo es toda la informacion en la que se va a ingresar en los interfaces graficos
 
-### Azul significa las tablas donde se traera toda esa informacion a el interfaz grafico
+##### Azul significa las tablas donde se traera toda esa informacion a el interfaz grafico
 
 - Configurar: Gestiona los colores de la pagina, imagene de fondo y tamaño de la letra
 
