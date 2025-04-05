@@ -9,7 +9,7 @@
 
 ### Configuracion a su gusto
 
->El cliente podra disfrutar de una ventana a su gusto cada usuario tendra una dashboard diferente haciendo que la app no sea aburrida
+> El cliente podra disfrutar de una ventana a su gusto cada usuario tendra una dashboard diferente haciendo que la app no sea aburrida
 
 
 ### Proximamente
@@ -21,10 +21,61 @@
 
 ## AVANCES
 
-#### Vista actualmente
+### Vista actualmente
+
+#### digrama flujo cliente
 
 <p align="center">
+  <img src="https://i.postimg.cc/9FYQQ5ct/Captura-de-pantalla-2025-04-05-110530.png" alt="Imagen">
+</p>
+
+#### interfaz grafica
+<p align="center">
   <img src="https://i.postimg.cc/8ktLR5qg/Captura-de-pantalla-2025-04-04-214022.png" alt="Imagen">
+</p>
+
+
+
+## ACTUALIZACIONES  
+
+```sabado, 5 de abril del 2025 ```
+
+- Diagrama de flujo del cliente en la aplicacion.
+
+- El recuadro gris es la introduccion a la pagina, donde va a ver toda la informacion.
+
+### Morado representan todas las interfaces graficas presentes en la pagina empezando en orden.
+
+### Amarillo es toda la informacion en la que se va a ingresar en los interfaces graficos
+
+### Azul significa las tablas donde se traera toda esa informacion a el interfaz grafico
+
+- Configurar: Gestiona los colores de la pagina, imagene de fondo y tamaño de la letra
+
+- Dashboard: es el inicio de la app, donde gestionas todos los controladores. (Es el centro de todo).
+
+- Vista: ingresar los procesos de todas las areas y las cards
+
+- Areas: gestion de todas las areas a las que van a ser asignadas en las cards
+
+- Cards: aca se administra todas las cards que iran a las areas para ser desarrolladas o trabajadas
+
+- Analisis: La direccion en la que va el proyecto, las areas con más cards y las que ya han sido completadas, la comparacion entre las cards en proceso y las ya terminadas
+
+- Roles: Se gestionan todos los roles que se asignan a los usuarios como desarrollador, administrador, diseñador, soporte, lideres de area etc etc
+
+### Las lineas significan la direccion a la que va esa informacion
+
+- Negras: los enlaces directos que iran conectado a las pestañas ejemplo dasboard/vista o configuracio.
+
+- Rosadas : las tablas que llevan los datos a el interfaz grafica.
+
+- Azul : el interfaz grafico que envia informacion a ingresar a dichas tablas.
+
+- Verde : las coneciones o los Joins donde se unen las tablas
+
+<p align="center">
+  <img src="https://i.postimg.cc/9FYQQ5ct/Captura-de-pantalla-2025-04-05-110530.pngg" alt="Imagen">
 </p>
 
 
