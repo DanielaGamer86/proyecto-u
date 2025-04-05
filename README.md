@@ -75,7 +75,7 @@
 - Verde : las coneciones o los Joins donde se unen las tablas
 
 <p align="center">
-  <img src="https://i.postimg.cc/9FYQQ5ct/Captura-de-pantalla-2025-04-05-110530.pngg" alt="Imagen">
+  <img src="https://i.postimg.cc/9FYQQ5ct/Captura-de-pantalla-2025-04-05-110530.png" alt="Imagen">
 </p>
 
 
