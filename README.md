@@ -36,7 +36,25 @@
 
 
 
-## ACTUALIZACIONES  
+## ACTUALIZACIONES
+
+```lunes, 7 de abril del 2025 ```
+
+### VISTA
+- En esta parte se podra ver las asignaciones las areas los procesos y las secciones es una vista general de todo.
+
+- En la parte superior estan los filtros donde se puede filtrar por area, persona y etc.
+
+- En la parte central se encuentran los enmarcados de las columnas que se dividen en procesos segun lo elija el admin, ejemplo asignado, en proceso y el DONE que son los que ya estan hechos.
+
+- Las columnas grandes que son donde estan posicionada las cards y se pueden ver en que proceso se encuentra.
+
+- Por ultimo el scroll lateral para visualisar los procesos.
+
+<p align="center">
+  <img src="https://i.postimg.cc/x8bGk2PZ/Captura-de-pantalla-2025-04-07-225356.png" alt="Imagen">
+</p>
+
 
 ```sabado, 5 de abril del 2025 ```
 
