@@ -31,7 +31,7 @@
 
 #### interfaz grafica
 <p align="center">
-  <img src="https://i.postimg.cc/8ktLR5qg/Captura-de-pantalla-2025-04-04-214022.png" alt="Imagen">
+  <img src="https://i.postimg.cc/pXJCK2vN/Captura-de-pantalla-2025-04-07-230712.png" alt="Imagen">
 </p>
 
 
