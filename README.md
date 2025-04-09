@@ -31,7 +31,7 @@
 
 #### interfaz grafica
 <p align="center">
-  <img src="https://i.postimg.cc/pXJCK2vN/Captura-de-pantalla-2025-04-07-230712.png" alt="Imagen">
+  <img src="" alt="Imagen">
 </p>
 
 
@@ -50,7 +50,7 @@
 - en el ultimo recuadro habra un boton de creacion que nos da paso a seguir creando areas.
 
 <p align="center">
-  <img src="cargarimagen.png" alt="Imagen">
+  <img src="https://i.postimg.cc/Z5hPvMnM/Captura-de-pantalla-2025-04-08-203728.png" alt="Imagen">
 </p>
 
 ```lunes, 7 de abril del 2025 ```
