@@ -38,6 +38,21 @@
 
 ## ACTUALIZACIONES
 
+```martes, 8 de abril del 2025 ```
+
+### AREAS
+- Las areas, dicho apartado es donde se administrara las areas de asignacion y gestion de las cards, va muy ligado con los roles y sus responsabilidades.
+
+- Como primera parte se encontraran los filtros para mejor encuentro con las areas.
+
+- En la parte inferior en base a cuadriculas o recuadros se van creando las areas que se distinguiran asi: Color, nombre y jefe encargado.
+
+- en el ultimo recuadro habra un boton de creacion que nos da paso a seguir creando areas.
+
+<p align="center">
+  <img src="cargarimagen.png" alt="Imagen">
+</p>
+
 ```lunes, 7 de abril del 2025 ```
 
 ### VISTA
