@@ -38,6 +38,14 @@
 
 ## ACTUALIZACIONES
 
+```martes, 9 de abril del 2025 ```
+
+### CARDS
+
+- Aqui se da a conocer todas las vistas de las cards de asignacion procesos y los DONE
+
+** El dia de hoy se hace la capacitación para Daniela y Victoria, no hay actualizacion de interfaz grafica hasta mañana en la mañana **
+
 ```martes, 8 de abril del 2025 ```
 
 ### AREAS
