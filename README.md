@@ -55,6 +55,20 @@
   <img src="https://i.postimg.cc/SjFGX7Xw/Captura-de-pantalla-2025-04-10-220951.png" alt="Imagen">
 </p>
 
+### ANALISIS
+
+- Este es un apartadp sencillo sin mucho rodeo, pero complejo desde la parte del backend. aca podras ver los diagramas de como va tu proyecto, a que direccion va y cuales son las areas y personas que más se han desempeñado
+
+- En la parte superior aparece el filtrado por areas, persona y el tipo de diagrama, de barras, lineal, circular, histograma, etc
+
+- En la parte inferior aparecen los diagramas generales con la informacion y sus datos
+
+- Para finalizar el infaltable scroll
+
+<p align="center">
+  <img src="https://i.postimg.cc/VsqTMDB7/Captura-de-pantalla-2025-04-10-224744.png" alt="Imagen">
+</p>
+
 ```miercoles, 9 de abril del 2025 ```
 
 ### CAPACITACION
