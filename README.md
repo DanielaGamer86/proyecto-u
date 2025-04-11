@@ -37,10 +37,27 @@
 
 
 ## ACTUALIZACIONES
-
-```martes, 9 de abril del 2025 ```
+```jueves, 10 de abril del 2025 ```
 
 ### CARDS
+
+- Como se dijo anteriormente aqui se visualizan todo lo que tiene que ver con las notas donde se dejan los casos, los problemas y los desarrollos por hacer. Esto sera visible personalmente y general dependiendo de la gestion de las restricciones y los roles.
+
+- En la primera parte superior derecha esta el filtrado por busqueda y un select por area.
+
+- En la parte superior izquierda esta la distincion de las areas, en que area estoy ubicado segun las areas en las que estoy asignado.
+
+- De la parte inferior estan todas las cards en las que se estan trabajando; el estado en el que esta el titulo y la informacion. la ultima card esta designada para seguir creando más
+
+- Por ultimo el scroll
+
+<p align="center">
+  <img src="https://i.postimg.cc/SjFGX7Xw/Captura-de-pantalla-2025-04-10-220951.png" alt="Imagen">
+</p>
+
+```miercoles, 9 de abril del 2025 ```
+
+### CAPACITACION
 
 - Aqui se da a conocer todas las vistas de las cards de asignacion procesos y los DONE
 
