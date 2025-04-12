@@ -37,6 +37,22 @@
 
 
 ## ACTUALIZACIONES
+```viernes, 11 de abril del 2025 ```
+
+### ROLES
+
+- En este apartado se realizara la creaciones de roles y consigo todo lo que tiene que ver con restricciones, es un apartado simple con un crud normal y una creacion de roles tipica.
+
+- Como primera parte un buscador para buscar el rol en caso de que hayan muchos roles.
+
+- del lado derecho un boton para crear más roles, este boton abrira un poppup con un formulario. este se generara o se tramitira en los dias que viene.
+
+- Por ultimo la tabla donde se visualizaran los roles, en la primera parte el color representativo del rol, el nombre del rol, las personas que pertenecen al rol y por ultimo dos botones que representan el boton de edicion y el de eliminar
+
+<p align="center">
+  <img src="https://i.postimg.cc/K84Ct32q/Captura-de-pantalla-2025-04-11-224358.png" alt="Imagen">
+</p>
+
 ```jueves, 10 de abril del 2025 ```
 
 ### CARDS
