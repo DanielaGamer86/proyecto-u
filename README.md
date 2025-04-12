@@ -37,6 +37,24 @@
 
 
 ## ACTUALIZACIONES
+```sabado, 12 de abril del 2025 ```
+
+### CONFIGURACION
+
+- En este panel se puede visualizar todo el apartado de configuracion y apariencia de la pagina como; los colores, tamaño de la letra y hasta el idioma.
+
+- Lo primero que podemos visualizar son los checks que aparecen como opciones de configuración.
+
+- En la parte inferior aparece un pequeño panel de colores para cambiar la configuracion y del lado derecho un ejemplo de como se miraria estructuradamente la pagina.
+
+- Por ultimo el boton de cerrar la ventana en la esquina superior derecha para seguir trabajando.
+
+- Pdt: hay más configuraciones como un select de lenguaje y más pero no se visualiza.
+
+<p align="center">
+  <img src="https://i.postimg.cc/sxrZNGKz/Captura-de-pantalla-2025-04-12-105739.png" alt="Imagen">
+</p>
+
 ```viernes, 11 de abril del 2025 ```
 
 ### ROLES
