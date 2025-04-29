@@ -37,6 +37,22 @@
 
 
 ## ACTUALIZACIONES
+
+```lunes, 28 de abril del 2025 ```
+
+- Desapareci por un tiempo pero el avance es grande.
+
+- Hice el apartado de inicio con las siguientes tecnologias, react, js, electron y electron router y librerias como frame motion, axion y bootstrap.
+
+- En el inicio se puede ver el titulo de la app que ira el logo, los botones de iniciar, registrarte, en la parte de abajo las imagenes que vendria siendo un carruzel y más abajo los planes.
+
+- he aqui una imagen y proximamente un link que les redireccionara a el link de como esta estructurado.
+
+<p align="center">
+  <img src="https://i.postimg.cc/x1mYNPHh/Captura-de-pantalla-2025-04-28-220653.png" alt="Imagen">
+</p>
+
+
 ```sabado, 12 de abril del 2025 ```
 
 ### CONFIGURACION
