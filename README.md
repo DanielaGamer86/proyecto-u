@@ -16,8 +16,9 @@
 
 > Se crearan extenciones para VSC, github, figmora, canva etc para que las cards puedan ser visibles desde ahi y facilitar mucho más el trabajo
 
+## CENTRAL
 
-
+### 📄[CENTRAL LINKS](admin-proyect/README.md)
 
 ## AVANCES
 
@@ -37,6 +38,8 @@
 
 
 ## ACTUALIZACIONES
+
+### INTERFAZ LANDING
 ```martes, 29 de abril del 2025 ```
 - Cargamos los planes de el servicio aunque no estoy 100% seguro de que quede asi.
 
@@ -48,6 +51,7 @@
   <img src="https://i.postimg.cc/vH2jLyBg/Captura-de-pantalla-2025-04-29-225213.png" alt="Imagen">
 </p>
 
+###### 📄 Ver documentación completa en [Ir al apartado](admin-proyect/src/pages/landing/README.md)
 
 
 ```lunes, 28 de abril del 2025 ```
