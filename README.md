@@ -37,6 +37,18 @@
 
 
 ## ACTUALIZACIONES
+```martes, 29 de abril del 2025 ```
+- Cargamos los planes de el servicio aunque no estoy 100% seguro de que quede asi.
+
+- Se agrega el idioma en la pagina y encima los botones esta mejorado.
+
+- Por ultimo, más información estara proximamente en un link que les redirecciona a la documentacion más a detalle
+
+<p align="center">
+  <img src="https://i.postimg.cc/vH2jLyBg/Captura-de-pantalla-2025-04-29-225213.png" alt="Imagen">
+</p>
+
+
 
 ```lunes, 28 de abril del 2025 ```
 
