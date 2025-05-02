@@ -22,7 +22,7 @@ i18n
           chooseplan: 'Choose plan',
           cancel: 'Cancel',
           custom: 'Custom price',
-          perMonth: '/month'
+          Month: '/month'
         }
       },
       es: {
@@ -40,7 +40,7 @@ i18n
           chooseplan: 'Elegir plan',
           cancel: 'Cancelar',
           custom: 'A medida',
-          perMonth: '/mes'
+          Month: '/mes'
         }
       }
     },

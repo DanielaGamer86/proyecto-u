@@ -1,3 +1,18 @@
 body {
   background-color: #171717;
 }
+
+.form-control {
+  line-height: 1.5;
+}
+
+.form-control:focus {
+  background-color: #212529 !important;
+  border-color: #495057 !important;
+  box-shadow: none !important;
+}
+
+/* Estilo para el placeholder */
+.form-control::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}

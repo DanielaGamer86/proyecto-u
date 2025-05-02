@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import logoSvg from '../../assets/blancoicon.svg';
 
 export default function Landing() {
   const navigate = useNavigate();
@@ -63,7 +64,9 @@ export default function Landing() {
     <div className="min-vh-100 bg-dark text-light">
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
         <div className="container pb-3">
-          <a className="navbar-brand fs-3">Alphima</a>
+          <a className="navbar-brand">
+            <img src={logoSvg} alt="Alphima" height="40" />
+          </a>
           <div className="d-flex align-items-center">
             <div className="dropdown me-3">
               <button className="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown">
@@ -143,7 +146,7 @@ export default function Landing() {
                         <>
                           <small className="fs-6 text-secondary">$</small>
                           {plan.price}
-                          {plan.price !== '0' && <small className="fs-6 text-secondary">{t('perMonth')}</small>}
+                          {plan.price !== '0' && <small className="fs-6 text-secondary">{t('Month')}</small>}
                         </>
                       )}
                     </div>
@@ -191,7 +194,7 @@ export default function Landing() {
                       <>
                         <span className="fs-6 text-secondary">$</span>
                         {selectedPlan.price}
-                        {selectedPlan.price !== '0' && <span className="fs-6 text-secondary">{t('perMonth')}</span>}
+                        {selectedPlan.price !== '0' && <span className="fs-6 text-secondary">{t('Month')}</span>}
                       </>
                     )}
                   </div>
