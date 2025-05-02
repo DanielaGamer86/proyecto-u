@@ -62,7 +62,9 @@ export default function Login() {
           </form>
           
           <div className="d-flex align-items-center mt-3">
-            <img src={BlancoIcon} alt="Logo" width="50" height="50" />
+            <div className="mx-auto">
+              <img src={BlancoIcon} alt="Logo" width="50" height="50" />
+            </div>
             <div className="ms-auto">
               <div onClick={() => navigate('/register')} className="text-white mb-2 cursor-pointer">
                 {t('dontHaveAccount')}
