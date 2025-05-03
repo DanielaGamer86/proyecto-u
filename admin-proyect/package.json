@@ -5,8 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "electron": "wait-on http://localhost:5173 && electron .",
-    "electron-dev": "concurrently \"npm run dev\" \"npm run electron\""
+    "build": "vite build",
+    "preview": "vite preview",
+    "electron:dev": "concurrently \"npm run dev\" \"electron .\"",
+    "electron:build": "vite build && electron-builder"
   },
   "dependencies": {
     "@mantine/core": "^7.17.5",
@@ -29,12 +31,13 @@
     "autoprefixer": "^10.4.21",
     "concurrently": "^8.2.2",
     "electron": "^28.3.3",
+    "electron-is-dev": "^3.0.1",
     "postcss": "^8.5.3",
     "tailwindcss": "^4.1.4",
     "vite": "^5.0.0",
     "wait-on": "^7.2.0"
   },
-  "main": "electron/main.js",
+  "main": "electron/main.cjs",
   "build": {
     "appId": "com.diego.app",
     "files": [

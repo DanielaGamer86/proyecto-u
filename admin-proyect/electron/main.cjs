@@ -1,8 +1,10 @@
 const { app, BrowserWindow } = require('electron')
 const path = require('path')
-const isDev = require('electron-is-dev')
 
-function createWindow() {
+async function createWindow() {
+  // Importar electron-is-dev dinámicamente
+  const isDev = (await import('electron-is-dev')).default
+
   const win = new BrowserWindow({
     width: 1200,
     height: 800,
@@ -12,27 +14,23 @@ function createWindow() {
     }
   })
 
-  // Cargar la URL de desarrollo o el archivo de distribución
   if (isDev) {
-    win.loadURL('http://localhost:5173')
-    win.webContents.openDevTools()
+    win.loadURL('http://localhost:5174')
   } else {
     win.loadFile(path.join(__dirname, '../dist/index.html'))
   }
 }
 
-app.whenReady().then(() => {
-  createWindow()
-
-  app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) {
-      createWindow()
-    }
-  })
-})
+app.whenReady().then(createWindow)
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit()
+  }
+})
+
+app.on('activate', () => {
+  if (BrowserWindow.getAllWindows().length === 0) {
+    createWindow()
   }
 })
