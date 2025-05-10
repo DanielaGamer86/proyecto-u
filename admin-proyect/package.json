@@ -8,6 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "electron:dev": "concurrently \"npm run dev\" \"electron .\"",
+    "server": "node server/index.js",
     "electron:build": "vite build && electron-builder"
   },
   "dependencies": {
@@ -17,6 +18,8 @@
     "axios": "^1.8.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
     "framer-motion": "^12.7.4",
     "path": "^0.12.7",
     "react": "^19.0.0",
