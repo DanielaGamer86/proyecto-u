@@ -202,7 +202,7 @@ export default function Register() {
               <img src={BlancoIcon} alt="Logo" width="50" height="50" />
             </div>
             <div className="ms-auto">
-              <div onClick={() => navigate('/auth/login')} className="text-white mb-2 cursor-pointer">
+              <div onClick={() => navigate('/login')} className="text-white mb-2 cursor-pointer">
                 {t('alreadyHaveAccount')}
               </div>
               <div className="text-white cursor-pointer">

@@ -1,8 +1,9 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Landing from '../pages/landing/Landing';
 import Login from '../pages/auth/login/Login';
 import Register from '../pages/auth/register/Register';
-import Home from '../pages/dashboard/Dashboard';
+import Dashboard from '../pages/dashboard/Dashboard';
+import ProtectedRoute from '../components/ProtectedRoute';
 
 export function AppRoutes() {
   return (
@@ -10,7 +11,14 @@ export function AppRoutes() {
       <Route path="/" element={<Landing />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      <Route path="/Home" element={<Home />} />
+      <Route 
+        path="/dashboard" 
+        element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        } 
+      />
     </Routes>
   );
 }
