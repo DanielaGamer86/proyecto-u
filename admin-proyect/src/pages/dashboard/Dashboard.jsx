@@ -12,7 +12,14 @@ import {
     faRing,
     faDragon,
     faGear,
-    faUser
+    faCircleUser,
+    faUserGroup,
+    faUser,
+    faEllipsisVertical,
+    faCartShopping,
+    faBell,
+    faRightToBracket,
+    faMemory
 } from '@fortawesome/free-solid-svg-icons';
 import BlancoIcon from '../../assets/blancoicon.svg';
 import { Tooltip } from 'react-bootstrap';
@@ -22,9 +29,9 @@ function Dashboard() {
     const navigate = useNavigate();
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     const [sidebarsVisible, setSidebarsVisible] = useState(false);
+    const [activeUsers] = useState(1); // simular usuarios activos
 
-    // Es una buena práctica usar useEffect para manejar eventos de teclado
-    // y limpiar el efecto al desmontar el componente.
+    
     useEffect(() => {
         const handleKeyDown = (e) => {
             if (e.key === 'Tab') {
@@ -43,18 +50,18 @@ function Dashboard() {
     };
 
     const mainMenuItems = [
-        { icon: <FontAwesomeIcon icon={faHouse} size="lg" />, text: 'Inicio', active: true },
-        { icon: <FontAwesomeIcon icon={faBinoculars} size="lg" />, text: 'Explorar' },
-        { icon: <FontAwesomeIcon icon={faCubes} size="lg" />, text: 'Productos' },
-        { icon: <FontAwesomeIcon icon={faBarsProgress} size="lg" />, text: 'Progreso' },
-        { icon: <FontAwesomeIcon icon={faChartSimple} size="lg" />, text: 'Estadísticas' },
-        { icon: <FontAwesomeIcon icon={faRing} size="lg" />, text: 'Eventos' },
+        { icon: <FontAwesomeIcon icon={faHouse} size="lg" />, text: 'Inicio', active: true }, //activo si es la pagina de inicio
+        { icon: <FontAwesomeIcon icon={faBinoculars} size="lg" />, text: 'Explorar' }, // icono de lupa
+        { icon: <FontAwesomeIcon icon={faCubes} size="lg" />, text: 'Productos' }, // icono de cubos
+        { icon: <FontAwesomeIcon icon={faBarsProgress} size="lg" />, text: 'Progreso' }, // icono de progreso
+        { icon: <FontAwesomeIcon icon={faChartSimple} size="lg" />, text: 'Estadísticas' }, // icono de estadisticas
+        { icon: <FontAwesomeIcon icon={faRing} size="lg" />, text: 'Eventos' }, // icono de anillo
     ];
 
     const bottomMenuItems = [
         { type: 'divider' },
-        { icon: <FontAwesomeIcon icon={faDragon} size="lg" />, text: 'Perfil' },
-        { icon: <FontAwesomeIcon icon={faGear} size="lg" />, text: 'Configuración' },
+        { icon: <FontAwesomeIcon icon={faDragon} size="lg" />, text: 'Perfil' }, // icono de dragon
+        { icon: <FontAwesomeIcon icon={faGear} size="lg" />, text: 'Configuración' }, // icono de engranaje
     ];
 
     const renderTooltip = (text) => (
@@ -134,7 +141,7 @@ function Dashboard() {
                 marginRight: '32px',
                 transition: 'margin-left 0.3s'
             }}>
-                {/* Header */}
+                {/* Header - para el logout */}
                 <nav className="navbar navbar-dark bg-dark border-bottom border-secondary px-4">
                     <div className="d-flex align-items-center">
                         <motion.button
@@ -147,24 +154,9 @@ function Dashboard() {
                         </motion.button>
                         <span className="navbar-brand">Dashboard</span>
                     </div>
-                    <div className="d-flex align-items-center">
-                        <div className="text-light me-4">
-                            <div className="fw-bold">{user.nombre}</div>
-                            <div className="small text-muted">{user.email}</div>
-                        </div>
-                        <motion.button 
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="btn btn-outline-danger"
-                            onClick={handleLogout}
-                        >
-                            <FaSignOutAlt className="me-2" />
-                            Cerrar sesión
-                        </motion.button>
-                    </div>
                 </nav>
 
-                {/* Content */}
+                {/* Contenido */}
                 <div className="p-4">
                     <div className="row g-4">
                         {/* inicio de las cards */}
@@ -215,20 +207,43 @@ function Dashboard() {
                     backgroundColor: '#1a1d20'
                 }}
             >
-                <div className="py-2">
-                    {/* Barra derecha 1 Contenido */}
-                    <div className="p-2 text-light text-center">
-                        <OverlayTrigger
-                            placement="left"
-                            overlay={renderTooltip('Configuración')}
-                        >
-                            <div><FontAwesomeIcon icon={faGear} size="lg" /></div>
-                        </OverlayTrigger>
-                    </div>
+                <div className="py-2 d-flex flex-column h-100">
+                    <OverlayTrigger
+                        placement="left"
+                        overlay={renderTooltip('Tu perfil')}
+                    >
+                        <div className="p-4 text-light text-center">
+                            <FontAwesomeIcon 
+                                icon={faCircleUser} 
+                                size="2x"
+                                style={{ cursor: 'pointer' }}
+                            />
+                        </div>
+                    </OverlayTrigger>
+
+                    <div className="border-top border-secondary my-3 mx-3"></div>
+
+                    <OverlayTrigger
+                        placement="left"
+                        overlay={renderTooltip(activeUsers > 1 ? 'Usuarios conectados' : 'Sin usuarios conectados')}
+                    >
+                        <div className="p-2 text-light text-center position-relative">
+                            <FontAwesomeIcon 
+                                icon={activeUsers > 1 ? faUserGroup : faUser}
+                                size="lg"
+                                style={{ cursor: 'pointer' }}
+                            />
+                            {activeUsers > 1 && (
+                                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary" style={{ fontSize: '0.6rem' }}>
+                                    {activeUsers}
+                                </span>
+                            )}
+                        </div>
+                    </OverlayTrigger>
                 </div>
             </motion.div>
 
-            {/* Barra derecha 2 */}
+            {/* Barra derecha 2 - updated content */}
             <motion.div
                 className="bg-dark border-secondary position-fixed"
                 initial={{ width: 0, right: 16 }}
@@ -248,16 +263,46 @@ function Dashboard() {
                     backgroundColor: '#1a1d20'
                 }}
             >
-                <div className="py-2">
-                    {/* Barra derecha 2 Contenido */}
-                    <div className="p-2 text-light text-center">
-                        <OverlayTrigger
-                            placement="left"
-                            overlay={renderTooltip('Perfil')}
-                        >
-                            <div><FontAwesomeIcon icon={faUser} size="lg" /></div>
-                        </OverlayTrigger>
-                    </div>
+                <div className="py-2 d-flex flex-column justify-content-between h-100">
+                    <OverlayTrigger placement="left" overlay={renderTooltip('Carrito')}>
+                        <div className="p-2 text-light text-center">
+                            <FontAwesomeIcon 
+                                icon={faCartShopping} 
+                                size="lg" 
+                                style={{ cursor: 'pointer' }}
+                            />
+                        </div>
+                    </OverlayTrigger>
+
+                    <OverlayTrigger placement="left" overlay={renderTooltip('Memoria')}>
+                        <div className="p-2 text-light text-center">
+                            <FontAwesomeIcon 
+                                icon={faMemory} 
+                                size="lg" 
+                                style={{ cursor: 'pointer' }}
+                            />
+                        </div>
+                    </OverlayTrigger>
+
+                    <OverlayTrigger placement="left" overlay={renderTooltip('Notificaciones')}>
+                        <div className="p-2 text-light text-center">
+                            <FontAwesomeIcon 
+                                icon={faBell} 
+                                size="lg" 
+                                style={{ cursor: 'pointer' }}
+                            />
+                        </div>
+                    </OverlayTrigger>
+
+                    <OverlayTrigger placement="left" overlay={renderTooltip('Cerrar sesión')}>
+                        <div className="p-2 text-light text-center mb-2" onClick={handleLogout}>
+                            <FontAwesomeIcon 
+                                icon={faRightToBracket} 
+                                size="lg" 
+                                style={{ cursor: 'pointer' }}
+                            />
+                        </div>
+                    </OverlayTrigger>
                 </div>
             </motion.div>
         </div>
