@@ -3,7 +3,12 @@ import Landing from "../pages/Landing";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Dashboard from "../pages/Dashboard";
-import Settigns from "../pages/Settings";
+import Views from "../pages/views/Views";
+import Areas from "../pages/areas/Areas";
+import Cards from "../pages/cards/Cards";
+import Analysis from "../pages/analysis/Analysis";
+import Roles from "../pages/roles/Roles";
+import Settings from "../pages/Settings";
 
 const router = createBrowserRouter([
   {
@@ -11,7 +16,7 @@ const router = createBrowserRouter([
     element: <Landing />,
   },
   {
-    path: "/loading",
+    path: "/login", // Corregido de "loading" a "login"
     element: <Login />,
   },
   {
@@ -23,9 +28,29 @@ const router = createBrowserRouter([
     element: <Dashboard />,
   },
   {
-    path: "/settings",
-    element: <Settigns />,
+    path: "/views",
+    element: <Views />,
   },
+  {
+    path: "/areas",
+    element: <Areas />,
+  },
+  {
+    path: "/cards",
+    element: <Cards />,
+  },
+  {
+    path: "/analysis",
+    element: <Analysis />,
+  },
+  {
+    path: "/roles",
+    element: <Roles />,
+  },
+  {
+    path: "/settings",
+    element: <Settings />,
+  }
 ]);
 
 export default router;
