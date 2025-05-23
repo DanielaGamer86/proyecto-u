@@ -50,17 +50,42 @@ function Dashboard() {
     };
 
     const mainMenuItems = [
-        { icon: <FontAwesomeIcon icon={faHouse} size="lg" />, text: 'Inicio', active: true }, //activo si es la pagina de inicio
-        { icon: <FontAwesomeIcon icon={faBinoculars} size="lg" />, text: 'Explorar' }, // icono de lupa
-        { icon: <FontAwesomeIcon icon={faCubes} size="lg" />, text: 'Productos' }, // icono de cubos
-        { icon: <FontAwesomeIcon icon={faBarsProgress} size="lg" />, text: 'Progreso' }, // icono de progreso
-        { icon: <FontAwesomeIcon icon={faChartSimple} size="lg" />, text: 'Estadísticas' }, // icono de estadisticas
-        { icon: <FontAwesomeIcon icon={faRing} size="lg" />, text: 'Eventos' }, // icono de anillo
+        { 
+            icon: <FontAwesomeIcon icon={faHouse} size="lg" />, 
+            text: 'Inicio', 
+            path: '/dashboard', 
+            active: true 
+        },
+        { 
+            icon: <FontAwesomeIcon icon={faBinoculars} size="lg" />, 
+            text: 'Vistas', 
+            path: '/dashboard/views'
+        },
+        { 
+            icon: <FontAwesomeIcon icon={faCubes} size="lg" />, 
+            text: 'Areas', 
+            path: '/dashboard/areas'
+        },
+        { 
+            icon: <FontAwesomeIcon icon={faBarsProgress} size="lg" />, 
+            text: 'Cards', 
+            path: '/dashboard/cards'
+        },
+        { 
+            icon: <FontAwesomeIcon icon={faChartSimple} size="lg" />, 
+            text: 'Analisis', 
+            path: '/dashboard/analysis'
+        },
+        { 
+            icon: <FontAwesomeIcon icon={faRing} size="lg" />, 
+            text: 'Roles', 
+            path: '/dashboard/roles'
+        },
     ];
 
     const bottomMenuItems = [
         { type: 'divider' },
-        { icon: <FontAwesomeIcon icon={faDragon} size="lg" />, text: 'Perfil' }, // icono de dragon
+        { icon: <FontAwesomeIcon icon={faDragon} size="lg" />, text: 'Plugins' }, // icono de dragon
         { icon: <FontAwesomeIcon icon={faGear} size="lg" />, text: 'Configuración' }, // icono de engranaje
     ];
 
@@ -88,6 +113,7 @@ function Dashboard() {
                     whileHover={{ backgroundColor: '#2c3034' }}
                     className={`d-flex align-items-center justify-content-center p-3 text-light ${item.active ? 'bg-primary' : ''}`}
                     style={{ cursor: 'pointer' }}
+                    onClick={() => navigate(item.path)}
                 >
                     {item.icon}
                 </motion.div>
