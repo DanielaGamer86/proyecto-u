@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, Outlet } from 'react-router-dom';
+import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate, Outlet, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FaSignOutAlt, FaBars, FaTimes } from 'react-icons/fa';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -27,9 +27,12 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 
 function Dashboard() {
     const navigate = useNavigate();
+    const location = useLocation();
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     const [sidebarsVisible, setSidebarsVisible] = useState(false);
     const [activeUsers] = useState(1); // simular usuarios activos
+    const [isBarsFocused, setIsBarsFocused] = useState(true);
+    const sidebarRef = useRef(null);
 
     
     useEffect(() => {
@@ -43,6 +46,17 @@ function Dashboard() {
         return () => window.removeEventListener('keydown', handleKeyDown);
     }, []);
 
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+                setIsBarsFocused(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
+
     const handleLogout = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
@@ -53,8 +67,7 @@ function Dashboard() {
         { 
             icon: <FontAwesomeIcon icon={faHouse} size="lg" />, 
             text: 'Inicio', 
-            path: '/dashboard', 
-            active: true 
+            path: '/dashboard'
         },
         { 
             icon: <FontAwesomeIcon icon={faBinoculars} size="lg" />, 
@@ -103,6 +116,8 @@ function Dashboard() {
             );
         }
 
+        const isActive = location.pathname === item.path;
+
         return (
             <OverlayTrigger
                 key={index}
@@ -110,28 +125,58 @@ function Dashboard() {
                 overlay={renderTooltip(item.text)}
             >
                 <motion.div
-                    whileHover={{ backgroundColor: '#2c3034' }}
-                    className={`d-flex align-items-center justify-content-center p-3 text-light ${item.active ? 'bg-primary' : ''}`}
-                    style={{ cursor: 'pointer' }}
+                    whileHover={{ backgroundColor: '#2c3034', scale: 1.05 }}
+                    animate={{
+                        backgroundColor: isActive ? '#2c3034' : 'transparent',
+                        x: isActive ? 5 : 0
+                    }}
+                    transition={{ duration: 0.2 }}
+                    className={`d-flex align-items-center justify-content-center p-3 text-light`}
+                    style={{ 
+                        cursor: 'pointer',
+                        position: 'relative'
+                    }}
                     onClick={() => navigate(item.path)}
                 >
+                    {isActive && (
+                        <motion.div
+                            layoutId="activeIndicator"
+                            className="position-absolute"
+                            style={{
+                                left: 0,
+                                width: '4px',
+                                height: '70%',
+                                backgroundColor: '#6c757d',
+                                borderRadius: '0 4px 4px 0'
+                            }}
+                            transition={{ duration: 0.2 }}
+                        />
+                    )}
                     {item.icon}
                 </motion.div>
             </OverlayTrigger>
         );
     };
 
+    // Modificar los estilos de las barras flotantes
+    const sidebarStyle = {
+        opacity: sidebarsVisible ? (isBarsFocused ? 1 : 0.5) : 0,
+        transition: 'all 0.3s ease'
+    };
+
     return (
         <div className="min-vh-100 d-flex position-relative bg-dark">
             {/* Barra Izquierda */}
             <motion.div 
+                ref={sidebarRef}
                 className="bg-dark border-secondary position-fixed"
                 initial={{ width: 80, left: 16 }}
                 animate={{ 
                     width: sidebarsVisible ? 80 : 0,
                     left: 16,
-                    opacity: sidebarsVisible ? 1 : 0
+                    opacity: sidebarsVisible ? (isBarsFocused ? 1 : 0.5) : 0
                 }}
+                onHoverStart={() => setIsBarsFocused(true)}
                 transition={{ duration: 0.3 }}
                 style={{ 
                     overflowX: 'hidden', 
@@ -189,12 +234,12 @@ function Dashboard() {
             {/* Barra derecha 1 */}
             <motion.div
                 className="bg-dark border-secondary position-fixed"
-                initial={{ width: 0, right: 16 }}
                 animate={{ 
                     width: sidebarsVisible ? 80 : 0,
                     right: 16,
-                    opacity: sidebarsVisible ? 1 : 0
+                    opacity: sidebarsVisible ? (isBarsFocused ? 1 : 0.5) : 0
                 }}
+                onHoverStart={() => setIsBarsFocused(true)}
                 transition={{ duration: 0.3 }}
                 style={{ 
                     overflowX: 'hidden',
@@ -245,12 +290,12 @@ function Dashboard() {
             {/* Barra derecha 2 - updated content */}
             <motion.div
                 className="bg-dark border-secondary position-fixed"
-                initial={{ width: 0, right: 16 }}
                 animate={{ 
                     width: sidebarsVisible ? 80 : 0,
                     right: 16,
-                    opacity: sidebarsVisible ? 1 : 0
+                    opacity: sidebarsVisible ? (isBarsFocused ? 1 : 0.5) : 0
                 }}
+                onHoverStart={() => setIsBarsFocused(true)}
                 transition={{ duration: 0.3 }}
                 style={{ 
                     overflowX: 'hidden',
