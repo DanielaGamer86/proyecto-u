@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Outlet } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FaSignOutAlt, FaBars, FaTimes } from 'react-icons/fa';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -59,27 +59,27 @@ function Dashboard() {
         { 
             icon: <FontAwesomeIcon icon={faBinoculars} size="lg" />, 
             text: 'Vistas', 
-            path: '/dashboard/views'
+            path: '/views'
         },
         { 
             icon: <FontAwesomeIcon icon={faCubes} size="lg" />, 
             text: 'Areas', 
-            path: '/dashboard/areas'
+            path: '/areas'
         },
         { 
             icon: <FontAwesomeIcon icon={faBarsProgress} size="lg" />, 
             text: 'Cards', 
-            path: '/dashboard/cards'
+            path: '/cards'
         },
         { 
             icon: <FontAwesomeIcon icon={faChartSimple} size="lg" />, 
             text: 'Analisis', 
-            path: '/dashboard/analysis'
+            path: '/analysis'
         },
         { 
             icon: <FontAwesomeIcon icon={faRing} size="lg" />, 
             text: 'Roles', 
-            path: '/dashboard/roles'
+            path: '/roles'
         },
     ];
 
@@ -182,35 +182,8 @@ function Dashboard() {
                     </div>
                 </nav>
 
-                {/* Contenido */}
-                <div className="p-4">
-                    <div className="row g-4">
-                        {/* inicio de las cards */}
-                        {[1, 2, 3, 4].map((item) => (
-                            <div key={item} className="col-md-3">
-                                <motion.div 
-                                    whileHover={{ scale: 1.02 }}
-                                    className="card bg-dark text-light border-secondary"
-                                >
-                                    <div className="card-body">
-                                        <h5 className="card-title">Estadística {item}</h5>
-                                        <h2 className="mb-0">0</h2>
-                                    </div>
-                                </motion.div>
-                            </div>
-                        ))}
-
-                        {/* Contenido de las areas */}
-                        <div className="col-12">
-                            <div className="card bg-dark text-light border-secondary">
-                                <div className="card-body">
-                                    <h4 className="card-title mb-4">Contenido Principal</h4>
-                                    <p>Bienvenido al panel de administración.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {/* Contenido dinámico */}
+                <Outlet />
             </div>
 
             {/* Barra derecha 1 */}
