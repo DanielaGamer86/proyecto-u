@@ -32,9 +32,13 @@ function Dashboard() {
     const [sidebarsVisible, setSidebarsVisible] = useState(false);
     const [activeUsers] = useState(1); // simular usuarios activos
     const [isBarsFocused, setIsBarsFocused] = useState(true);
+    const [isMounted, setIsMounted] = useState(false);
     const sidebarRef = useRef(null);
 
-    
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
+
     useEffect(() => {
         const handleKeyDown = (e) => {
             if (e.key === 'Tab') {
@@ -170,14 +174,18 @@ function Dashboard() {
             <motion.div 
                 ref={sidebarRef}
                 className="bg-dark border-secondary position-fixed"
-                initial={{ width: 80, left: 16 }}
+                initial={{ width: 0, left: 16, opacity: 0 }}
                 animate={{ 
-                    width: sidebarsVisible ? 80 : 0,
+                    width: sidebarsVisible && isMounted ? 80 : 0,
                     left: 16,
-                    opacity: sidebarsVisible ? (isBarsFocused ? 1 : 0.5) : 0
+                    opacity: sidebarsVisible && isMounted ? (isBarsFocused ? 1 : 0.5) : 0
+                }}
+                transition={{ 
+                    type: "spring",
+                    stiffness: 200,
+                    damping: 20
                 }}
                 onHoverStart={() => setIsBarsFocused(true)}
-                transition={{ duration: 0.3 }}
                 style={{ 
                     overflowX: 'hidden', 
                     minWidth: sidebarsVisible ? 80 : 0,
@@ -234,13 +242,17 @@ function Dashboard() {
             {/* Barra derecha 1 */}
             <motion.div
                 className="bg-dark border-secondary position-fixed"
+                initial={{ width: 0, right: 16, opacity: 0 }}
                 animate={{ 
-                    width: sidebarsVisible ? 80 : 0,
+                    width: sidebarsVisible && isMounted ? 80 : 0,
                     right: 16,
-                    opacity: sidebarsVisible ? (isBarsFocused ? 1 : 0.5) : 0
+                    opacity: sidebarsVisible && isMounted ? (isBarsFocused ? 1 : 0.5) : 0
                 }}
-                onHoverStart={() => setIsBarsFocused(true)}
-                transition={{ duration: 0.3 }}
+                transition={{ 
+                    type: "spring",
+                    stiffness: 200,
+                    damping: 20
+                }}
                 style={{ 
                     overflowX: 'hidden',
                     borderRadius: '16px',
@@ -290,13 +302,17 @@ function Dashboard() {
             {/* Barra derecha 2 - updated content */}
             <motion.div
                 className="bg-dark border-secondary position-fixed"
+                initial={{ width: 0, right: 16, opacity: 0 }}
                 animate={{ 
-                    width: sidebarsVisible ? 80 : 0,
+                    width: sidebarsVisible && isMounted ? 80 : 0,
                     right: 16,
-                    opacity: sidebarsVisible ? (isBarsFocused ? 1 : 0.5) : 0
+                    opacity: sidebarsVisible && isMounted ? (isBarsFocused ? 1 : 0.5) : 0
                 }}
-                onHoverStart={() => setIsBarsFocused(true)}
-                transition={{ duration: 0.3 }}
+                transition={{ 
+                    type: "spring",
+                    stiffness: 200,
+                    damping: 20
+                }}
                 style={{ 
                     overflowX: 'hidden',
                     borderRadius: '16px',
