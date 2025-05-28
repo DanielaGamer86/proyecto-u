@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { handleLogin } from '../../../controllers/login/controller_login';
 import BlancoIcon from '../../../assets/blancoicon.svg';
 
@@ -11,6 +13,7 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const toggleLanguage = () => {
     i18n.changeLanguage(i18n.language === 'en' ? 'es' : 'en');
@@ -63,17 +66,25 @@ export default function Login() {
                 required
               />
             </div>
-            <div className="mb-3">
+            <div className="mb-3 position-relative">
               <motion.input 
                 whileFocus={{ scale: 1.02 }}
                 transition={{ duration: 0.2 }}
-                type="password"
+                type={showPassword ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="form-control bg-dark text-white border-secondary" 
                 placeholder={t('password')}
                 required
               />
+              <button
+                type="button"
+                className="btn btn-link position-absolute top-50 end-0 translate-middle-y text-light border-0 pe-3"
+                onClick={() => setShowPassword(!showPassword)}
+                style={{ backgroundColor: 'transparent' }}
+              >
+                <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+              </button>
             </div>
             <motion.button 
               whileHover={{ scale: 1.02 }}

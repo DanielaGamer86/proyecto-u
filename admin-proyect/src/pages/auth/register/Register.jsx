@@ -1,5 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import BlancoIcon from '../../../assets/blancoicon.svg';
 import { useTranslation } from 'react-i18next';
 import { useState, useEffect } from 'react';
@@ -21,6 +23,8 @@ export default function Register() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -157,11 +161,11 @@ export default function Register() {
                 required
               />
             </div>
-            <div className="mb-3">
+            <div className="mb-3 position-relative">
               <motion.input 
                 whileFocus={{ scale: 1.02 }}
                 transition={{ duration: 0.2 }}
-                type="password"
+                type={showPassword ? "text" : "password"}
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
@@ -169,12 +173,20 @@ export default function Register() {
                 placeholder={t('password')}
                 required
               />
+              <button
+                type="button"
+                className="btn btn-link position-absolute top-50 end-0 translate-middle-y text-light border-0 pe-3"
+                onClick={() => setShowPassword(!showPassword)}
+                style={{ backgroundColor: 'transparent' }}
+              >
+                <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+              </button>
             </div>
-            <div className="mb-3">
+            <div className="mb-3 position-relative">
               <motion.input 
                 whileFocus={{ scale: 1.02 }}
                 transition={{ duration: 0.2 }}
-                type="password"
+                type={showConfirmPassword ? "text" : "password"}
                 name="confirmPassword"
                 value={formData.confirmPassword}
                 onChange={handleChange}
@@ -182,6 +194,14 @@ export default function Register() {
                 placeholder={t('Confirm Password')}
                 required
               />
+              <button
+                type="button"
+                className="btn btn-link position-absolute top-50 end-0 translate-middle-y text-light border-0 pe-3"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                style={{ backgroundColor: 'transparent' }}
+              >
+                <FontAwesomeIcon icon={showConfirmPassword ? faEyeSlash : faEye} />
+              </button>
             </div>
             <small className="text-muted mb-3 d-block">
               {t('passwordHint')}
