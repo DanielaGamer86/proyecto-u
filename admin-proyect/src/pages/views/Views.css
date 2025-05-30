@@ -1,0 +1,173 @@
+.loading-spinner {
+    color: #a0aec0;
+    margin: 2rem auto;
+}
+
+.filters-container {
+    width: 95%;
+    margin: 0 auto 2rem auto;
+    background: linear-gradient(165deg, rgba(75, 85, 99, 0.4) 0%, rgba(75, 85, 99, 0.6) 100%);
+    backdrop-filter: blur(12px);
+    border-radius: 1.5rem;
+    padding: 2rem;
+    border: 1px solid rgba(209, 213, 219, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.filters-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    width: 100%;
+}
+
+.task-columns-container {
+    display: flex;
+    gap: 1.5rem;
+    overflow-x: auto;
+    padding: 1.5rem;
+    min-height: calc(100vh - 200px);
+    background: linear-gradient(to bottom, rgba(75, 85, 99, 0.2), rgba(75, 85, 99, 0.1));
+    border-radius: 1.5rem;
+    margin: 0 auto;
+    width: 95%;
+}
+
+.task-column {
+    background: linear-gradient(165deg, rgba(75, 85, 99, 0.4) 0%, rgba(75, 85, 99, 0.6) 100%);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(209, 213, 219, 0.1);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    min-height: 500px;
+    min-width: 350px;
+    flex: 1;
+    max-height: calc(100vh - 240px);
+    overflow-y: auto;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.task-column:hover {
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+
+.task-column::-webkit-scrollbar {
+    width: 6px;
+}
+
+.task-column::-webkit-scrollbar-track {
+    background: rgba(75, 85, 99, 0.1);
+    border-radius: 3px;
+}
+
+.task-column::-webkit-scrollbar-thumb {
+    background: rgba(209, 213, 219, 0.2);
+    border-radius: 3px;
+}
+
+.task-card {
+    background: rgba(75, 85, 99, 0.3);
+    border: 1px solid rgba(209, 213, 219, 0.1);
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(8px);
+}
+
+.task-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background: rgba(75, 85, 99, 0.4);
+}
+
+.filter-menu {
+    position: relative;
+    width: 100%;
+}
+
+.filter-button {
+    width: 100%;
+    background: linear-gradient(165deg, rgba(75, 85, 99, 0.4) 0%, rgba(75, 85, 99, 0.6) 100%);
+    color: #e2e8f0;
+    padding: 1rem 1.5rem;
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid rgba(209, 213, 219, 0.1);
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.filter-button:hover {
+    background: linear-gradient(165deg, rgba(75, 85, 99, 0.5) 0%, rgba(75, 85, 99, 0.7) 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.filter-dropdown {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    left: 0;
+    right: 0;
+    background: linear-gradient(165deg, rgba(75, 85, 99, 0.95) 0%, rgba(75, 85, 99, 0.98) 100%);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(209, 213, 219, 0.1);
+    border-radius: 0.75rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    z-index: 50;
+    padding: 0.75rem;
+    transform-origin: top;
+    animation: dropdownFade 0.2s ease;
+}
+
+.filter-option {
+    padding: 0.875rem 1rem;
+    color: #e2e8f0;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 0.5rem;
+    margin: 0.25rem;
+    font-weight: 500;
+}
+
+.filter-option:hover {
+    background: rgba(209, 213, 219, 0.1);
+}
+
+.filter-option.selected {
+    background: rgba(59, 130, 246, 0.15);
+    color: #93c5fd;
+}
+
+.empty-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    min-height: 200px;
+    color: #9ca3af;
+    background: rgba(75, 85, 99, 0.15);
+    border-radius: 1rem;
+    border: 2px dashed rgba(209, 213, 219, 0.2);
+    margin: 1rem 0;
+    transition: all 0.3s ease;
+}
+
+@keyframes dropdownFade {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
