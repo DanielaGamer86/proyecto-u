@@ -19,6 +19,15 @@ const supabase = createClient(supabaseUrl, supabaseKey, {
     }
 });
 
+// Función para establecer el token de autenticación
+export const setSupabaseToken = (token) => {
+    if (token) {
+        // Establecer el token de autenticación para las solicitudes
+        supabase.auth.setAuth(token);
+        console.log('Token de autenticación establecido');
+    }
+};
+
 // Verificar la conexión
 const verifyConnection = async () => {
     try {
