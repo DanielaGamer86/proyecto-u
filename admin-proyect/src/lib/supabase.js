@@ -23,7 +23,21 @@ const supabase = createClient(supabaseUrl, supabaseKey, {
 export const setSupabaseToken = (token) => {
     if (token) {
         // Establecer el token de autenticación para las solicitudes
-        supabase.auth.setAuth(token);
+        // Usar el método correcto según la versión de Supabase
+        if (typeof supabase.auth.setSession === 'function') {
+            // Para versiones más recientes de Supabase
+            supabase.auth.setSession({
+                access_token: token,
+                refresh_token: ''
+            });
+        } else if (typeof supabase.auth.setAuth === 'function') {
+            // Para versiones anteriores de Supabase
+            supabase.auth.setAuth(token);
+        } else {
+            // Alternativa si los métodos anteriores no están disponibles
+            // Establecer el token en los headers de las solicitudes
+            supabase.supabaseClient?.headers?.set('Authorization', `Bearer ${token}`);
+        }
         console.log('Token de autenticación establecido');
     }
 };
