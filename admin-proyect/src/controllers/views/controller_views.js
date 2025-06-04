@@ -41,5 +41,22 @@ export const ViewsController = {
                 error: error.message
             };
         }
+    },
+
+    async createColumn(columnName) {
+        try {
+            console.log('Controller: Creando nueva columna:', columnName);
+            const newColumn = await ViewsModel.createColumn(columnName);
+            return {
+                success: true,
+                data: newColumn
+            };
+        } catch (error) {
+            console.error('Error al crear columna:', error);
+            return {
+                success: false,
+                error: error.message
+            };
+        }
     }
 };
