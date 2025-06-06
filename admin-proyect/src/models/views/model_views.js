@@ -130,5 +130,28 @@ export const ViewsModel = {
             console.error('Error en createColumn:', error);
             throw new Error(`Error al crear nueva columna: ${error.message}`);
         }
+    },
+
+    async deleteColumn(columnId) {
+        try {
+            console.log('Model: Eliminando columna:', columnId);
+            
+            // Extraer el ID numérico si viene en formato 'column-123'
+            const id = columnId.startsWith('column-') ? columnId.replace('column-', '') : columnId;
+            
+            // Eliminar la columna
+            const { error } = await supabase
+                .from('columnas')
+                .delete()
+                .eq('id', id);
+            
+            if (error) throw error;
+            
+            console.log('Columna eliminada correctamente');
+            return true;
+        } catch (error) {
+            console.error('Error en deleteColumn:', error);
+            throw new Error(`Error al eliminar columna: ${error.message}`);
+        }
     }
 };

@@ -4,7 +4,7 @@
 }
 
 .filters-container {
-    width: 95%;
+    width: 100%;
     margin: 0 auto 2rem auto;
     background: linear-gradient(165deg, rgba(75, 85, 99, 0.4) 0%, rgba(75, 85, 99, 0.6) 100%);
     backdrop-filter: blur(12px);
@@ -12,6 +12,9 @@
     padding: 2rem;
     border: 1px solid rgba(209, 213, 219, 0.1);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box; /* Asegurar que el padding no afecte el ancho total */
+    overflow: hidden; /* Evitar que el contenido se desborde */
+    z-index: 10;
 }
 
 .filters-grid {
@@ -19,6 +22,16 @@
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 1.5rem;
     width: 100%;
+}
+
+/* Añadir estilos para el contenedor principal */
+.container-fluid {
+    overflow: hidden; /* Evitar scroll horizontal en el contenedor principal */
+    max-width: 100%;
+    padding: 1rem;
+    width: 100%;
+    box-sizing: border-box; /* Asegurar que el padding no afecte el ancho total */
+    position: relative; /* Asegurar que los elementos hijos se posicionen correctamente */
 }
 
 .task-columns-container {
@@ -30,7 +43,12 @@
     background: linear-gradient(to bottom, rgba(75, 85, 99, 0.2), rgba(75, 85, 99, 0.1));
     border-radius: 1.5rem;
     margin: 0 auto;
-    width: 95%;
+    width: 100%; /* Usar 100% en lugar de 95% */
+    max-width: 100%;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch; /* Para mejor desplazamiento en iOS */
+    overflow-y: hidden; /* Evitar scroll vertical */
+    box-sizing: border-box; /* Asegurar que el padding no afecte el ancho total */
 }
 
 .task-column {
@@ -40,12 +58,15 @@
     border-radius: 1rem;
     padding: 1.5rem;
     min-height: 500px;
-    min-width: 350px;
-    flex: 1;
+    min-width: 280px; /* Reducido para permitir más columnas en pantallas pequeñas */
+    width: 280px; /* Ancho fijo más pequeño */
+    flex: 0 0 auto; /* No permitir que las columnas se estiren */
     max-height: calc(100vh - 240px);
     overflow-y: auto;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
+    position: relative; /* Para posicionar el botón de eliminar */
+    margin-bottom: 1rem; /* Espacio inferior para evitar problemas de visualización */
 }
 
 .task-column:hover {
@@ -87,6 +108,8 @@
 .filter-menu {
     position: relative;
     width: 100%;
+    z-index: 100; /* Asegurar que el menú esté por encima de otros elementos */
+    margin-bottom: 0.5rem;
 }
 
 .filter-button {
@@ -97,12 +120,14 @@
     border-radius: 0.75rem;
     display: flex;
     align-items: center;
-    gap: 1rem;
+    justify-content: flex-start;
+    gap: 0.75rem;
     cursor: pointer;
     transition: all 0.2s ease;
     border: 1px solid rgba(209, 213, 219, 0.1);
     font-weight: 500;
     font-size: 0.95rem;
+    position: relative;
 }
 
 .filter-button:hover {
@@ -111,20 +136,34 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+.filter-button .selected-count {
+    background-color: rgba(59, 130, 246, 0.8);
+    color: white;
+    border-radius: 9999px;
+    padding: 0.15rem 0.5rem;
+    font-size: 0.75rem;
+    margin-left: auto;
+    font-weight: bold;
+}
+
 .filter-dropdown {
-    position: absolute;
-    top: calc(100% + 0.5rem);
-    left: 0;
-    right: 0;
-    background: linear-gradient(165deg, rgba(75, 85, 99, 0.95) 0%, rgba(75, 85, 99, 0.98) 100%);
+    position: fixed; /* Cambiar de absolute a fixed para que se superponga a toda la página */
+    top: auto; /* Eliminar el top calculado */
+    left: auto; /* Eliminar el left fijo */
+    right: auto; /* Eliminar el right fijo */
+    width: auto; /* Ancho automático basado en el contenido */
+    min-width: 250px; /* Ancho mínimo para el dropdown */
+    background: linear-gradient(165deg, rgba(31, 41, 55, 0.98) 0%, rgba(31, 41, 55, 0.99) 100%);
     backdrop-filter: blur(12px);
-    border: 1px solid rgba(209, 213, 219, 0.1);
+    border: 1px solid rgba(209, 213, 219, 0.2);
     border-radius: 0.75rem;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-    z-index: 50;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
     padding: 0.75rem;
     transform-origin: top;
     animation: dropdownFade 0.2s ease;
+    z-index: 9999; /* Valor muy alto para asegurar que esté por encima de todo */
+    max-height: 300px; /* Altura máxima para evitar que sea demasiado largo */
+    overflow-y: auto; /* Permitir scroll si hay muchas opciones */
 }
 
 .filter-option {
@@ -135,6 +174,9 @@
     border-radius: 0.5rem;
     margin: 0.25rem;
     font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .filter-option:hover {
@@ -144,6 +186,24 @@
 .filter-option.selected {
     background: rgba(59, 130, 246, 0.15);
     color: #93c5fd;
+    border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.filter-option .remove-option {
+    color: #93c5fd;
+    font-size: 0.8rem;
+    opacity: 0.7;
+}
+
+.filter-option .remove-option:hover {
+    opacity: 1;
+}
+
+.filter-empty {
+    padding: 1rem;
+    text-align: center;
+    color: #9ca3af;
+    font-style: italic;
 }
 
 .empty-column {
@@ -172,7 +232,6 @@
     }
 }
 
-// Añadir al final del archivo
 
 .create-column-button {
   background: linear-gradient(165deg, rgba(59, 130, 246, 0.7) 0%, rgba(37, 99, 235, 0.8) 100%);
@@ -209,7 +268,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
+  z-index: 10;
   backdrop-filter: blur(4px);
   animation: fadeIn 0.2s ease;
 }
@@ -233,4 +292,170 @@
 @keyframes slideUp {
   from { transform: translateY(20px); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }
+}
+
+
+.add-column-container {
+  min-width: 280px;
+  height: 100%;
+  background: rgba(75, 85, 99, 0.3);
+  border: 2px dashed rgba(156, 163, 175, 0.5);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  cursor: pointer;
+  margin: 0 10px;
+  backdrop-filter: blur(5px);
+  min-height: 200px;
+}
+
+.add-column-container:hover {
+  background: rgba(75, 85, 99, 0.5);
+  border-color: rgba(156, 163, 175, 0.8);
+}
+
+.add-column-icon {
+  color: rgba(156, 163, 175, 0.8);
+  margin-bottom: 15px;
+  background: rgba(59, 130, 246, 0.2);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-column-text {
+  color: rgba(209, 213, 219, 0.8);
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(8px);
+}
+
+.modal-container {
+  background-color: #1f2937;
+  padding: 2.5rem;
+  border-radius: 0.75rem;
+  width: 100%;
+  max-width: 550px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  animation: modalAppear 0.3s ease-out forwards;
+}
+
+@keyframes modalAppear {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+
+.add-column-container {
+  min-width: 280px;
+  height: 100%;
+  background: rgba(75, 85, 99, 0.3);
+  border: 2px dashed rgba(156, 163, 175, 0.5);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  cursor: pointer;
+  margin: 0 10px;
+  backdrop-filter: blur(5px);
+  min-height: 200px;
+}
+
+.add-column-container:hover {
+  background: rgba(75, 85, 99, 0.5);
+  border-color: rgba(156, 163, 175, 0.8);
+}
+
+.add-column-icon {
+  color: rgba(156, 163, 175, 0.8);
+  margin-bottom: 15px;
+  background: rgba(59, 130, 246, 0.2);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-column-text {
+  color: rgba(209, 213, 219, 0.8);
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+.delete-column-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(220, 38, 38, 0.7);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.2s ease;
+}
+
+.task-column:hover .delete-column-button {
+  opacity: 1;
+}
+
+.delete-column-button:hover {
+  background: rgba(220, 38, 38, 0.9);
+  transform: scale(1.1);
+}
+
+.delete-column-button:active {
+  transform: scale(0.95);
+}
+body, html {
+    overflow-x: hidden; /* Evitar scroll horizontal en toda la página */
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
 }

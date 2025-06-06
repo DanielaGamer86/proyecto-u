@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFilter, faUser, faBuilding, faTags, faInbox, faSpinner, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faFilter, faUser, faBuilding, faTags, faInbox, faSpinner, faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { ViewsController } from '../../controllers/views/controller_views';
 import './Views.css';
 
@@ -19,39 +19,105 @@ const EmptyColumn = ({ title }) => (
     >
       <FontAwesomeIcon icon={faInbox} size="3x" className="mb-3" />
     </motion.div>
-    <p>No hay actividades en "{title}"</p>
+    <p>No hay actividades</p>
   </motion.div>
 );
 
 // Componente para el filtro
 const FilterButton = ({ title, icon, options, selected, onSelect }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0, width: 0 });
+  const buttonRef = useRef(null);
+
+  // Calcular la posición del dropdown cuando se abre
+  const updateDropdownPosition = () => {
+    if (buttonRef.current) {
+      const rect = buttonRef.current.getBoundingClientRect();
+      setDropdownPosition({
+        top: rect.bottom + window.scrollY,
+        left: rect.left + window.scrollX,
+        width: rect.width
+      });
+    }
+  };
+
+  // Actualizar posición al abrir el dropdown
+  useEffect(() => {
+    if (isOpen) {
+      updateDropdownPosition();
+      // Actualizar posición al hacer scroll o redimensionar
+      window.addEventListener('scroll', updateDropdownPosition);
+      window.addEventListener('resize', updateDropdownPosition);
+    }
+    
+    return () => {
+      window.removeEventListener('scroll', updateDropdownPosition);
+      window.removeEventListener('resize', updateDropdownPosition);
+    };
+  }, [isOpen]);
+
+  // Cerrar el dropdown cuando se hace clic fuera de él
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (isOpen && !event.target.closest('.filter-menu')) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen]);
 
   return (
     <div className="filter-menu">
       <button
+        ref={buttonRef}
         className="filter-button"
         onClick={() => setIsOpen(!isOpen)}
       >
-        <FontAwesomeIcon icon={icon} />
-        {title}
+        <FontAwesomeIcon icon={icon} className="mr-2" />
+        <span>{title}</span>
+        {selected.length > 0 && (
+          <span className="selected-count">{selected.length}</span>
+        )}
       </button>
-      {isOpen && (
-        <div className="filter-dropdown">
-          {options.map((option) => (
-            <div
-              key={option.id}
-              className={`filter-option ${selected.includes(option.id) ? 'bg-blue-600' : ''}`}
-              onClick={() => {
-                onSelect(option.id);
-                setIsOpen(false);
-              }}
-            >
-              {option.name}
-            </div>
-          ))}
-        </div>
-      )}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div 
+            className="filter-dropdown"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+            style={{
+              top: `${dropdownPosition.top}px`,
+              left: `${dropdownPosition.left}px`,
+              width: `${dropdownPosition.width}px`
+            }}
+          >
+            {options.length === 0 ? (
+              <div className="filter-empty">No hay opciones disponibles</div>
+            ) : (
+              options.map((option) => (
+                <motion.div
+                  key={option.id}
+                  className={`filter-option ${selected.includes(option.id) ? 'selected' : ''}`}
+                  onClick={() => onSelect(option.id)}
+                  whileHover={{ scale: 1.03, backgroundColor: 'rgba(59, 130, 246, 0.2)' }}
+                  whileTap={{ scale: 0.97 }}
+                >
+                  <span className="option-name">{option.name}</span>
+                  {selected.includes(option.id) && (
+                    <FontAwesomeIcon icon={faTimes} className="remove-option" />
+                  )}
+                </motion.div>
+              ))
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
@@ -94,6 +160,35 @@ const TaskCard = ({ task, index }) => (
   </Draggable>
 );
 
+// Componente para el botón de crear columna (como una columna)
+const CreateColumnButton = ({ onClick }) => (
+  <motion.div 
+    className="add-column-container"
+    initial={{ opacity: 0, scale: 0.9 }}
+    animate={{ opacity: 1, scale: 1 }}
+    whileHover={{ scale: 1.03, boxShadow: "0 15px 30px rgba(0, 0, 0, 0.2)" }}
+    whileTap={{ scale: 0.97 }}
+    transition={{ type: "spring", stiffness: 400, damping: 17 }}
+    onClick={onClick}
+  >
+    <motion.div
+      className="add-column-icon"
+      animate={{ rotate: [0, 90, 180, 270, 360] }}
+      transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+    >
+      <FontAwesomeIcon icon={faPlus} size="2x" />
+    </motion.div>
+    <motion.p
+      className="add-column-text"
+      initial={{ y: 10, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ delay: 0.2 }}
+    >
+      Crear Nueva Columna
+    </motion.p>
+  </motion.div>
+);
+
 // Componente para el modal de crear columna
 const CreateColumnModal = ({ isOpen, onClose, onCreateColumn }) => {
   const [columnName, setColumnName] = useState('');
@@ -110,40 +205,91 @@ const CreateColumnModal = ({ isOpen, onClose, onCreateColumn }) => {
   if (!isOpen) return null;
   
   return (
-    <div className="modal-overlay">
-      <div className="modal-container">
-        <h3 className="text-xl font-semibold text-gray-200 mb-4">Crear Nueva Columna</h3>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label htmlFor="columnName" className="block text-gray-300 mb-2">Nombre de la columna</label>
-            <input
-              type="text"
-              id="columnName"
-              value={columnName}
-              onChange={(e) => setColumnName(e.target.value)}
-              className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Ingrese el nombre de la columna"
-              required
-            />
-          </div>
-          <div className="flex justify-end space-x-3">
-            <button
-              type="button"
-              onClick={onClose}
-              className="px-4 py-2 bg-gray-700 text-gray-300 rounded-md hover:bg-gray-600 transition-colors"
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div 
+          className="modal-overlay"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          style={{ zIndex: 9999 }}
+        >
+          <motion.div 
+            className="modal-container"
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ 
+              scale: 1, 
+              opacity: 1,
+              transition: { 
+                type: "spring", 
+                damping: 20, 
+                stiffness: 300,
+                duration: 0.4 
+              }
+            }}
+            exit={{ 
+              scale: 0.8, 
+              opacity: 0,
+              transition: { duration: 0.3 } 
+            }}
+          >
+            <motion.h3 
+              className="text-2xl font-semibold text-gray-200 mb-8 text-center"
+              initial={{ y: -20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1, transition: { delay: 0.1 } }}
             >
-              Cancelar
-            </button>
-            <button
-              type="submit"
-              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-500 transition-colors"
-            >
-              Crear
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
+              Crear nueva columna
+            </motion.h3>
+            
+            <form onSubmit={handleSubmit}>
+              <motion.div 
+                className="mb-8"
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1, transition: { delay: 0.2 } }}
+              >
+                <label htmlFor="columnName" className="block text-gray-300 mb-4 text-lg font-medium">
+                  Nombre de la columna
+                </label>
+                <input
+                  type="text"
+                  id="columnName"
+                  value={columnName}
+                  onChange={(e) => setColumnName(e.target.value)}
+                  className="w-full px-5 py-4 bg-gray-700 border border-gray-600 rounded-lg text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 text-lg"
+                  placeholder="Ingrese el nombre de la columna"
+                  autoFocus
+                  required
+                />
+              </motion.div>
+              
+              <motion.div 
+                className="flex justify-center space-x-6 mt-10"
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1, transition: { delay: 0.3 } }}
+              >
+                <motion.button
+                  type="button"
+                  onClick={onClose}
+                  className="px-8 py-4 bg-gray-700 text-gray-300 rounded-lg hover:bg-gray-600 transition-colors text-lg font-medium"
+                  whileHover={{ scale: 1.05, backgroundColor: "rgba(75, 85, 99, 0.8)" }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  Cancelar
+                </motion.button>
+                <motion.button
+                  type="submit"
+                  className="px-8 py-4 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition-colors text-lg font-medium"
+                  whileHover={{ scale: 1.05, backgroundColor: "rgba(59, 130, 246, 0.9)" }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  Crear
+                </motion.button>
+              </motion.div>
+            </form>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 };
 
@@ -219,6 +365,31 @@ function Views() {
       console.log('Columna creada exitosamente:', newColumn);
     } catch (err) {
       setError('Error al crear la columna: ' + err.message);
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleDeleteColumn = async (columnId) => {
+    try {
+      setIsLoading(true);
+      const result = await ViewsController.deleteColumn(columnId);
+      
+      if (!result.success) {
+        throw new Error(result.error);
+      }
+      
+      // Eliminar la columna del estado
+      setColumns(prev => {
+        const newColumns = { ...prev };
+        delete newColumns[columnId];
+        return newColumns;
+      });
+      
+      console.log('Columna eliminada exitosamente');
+    } catch (err) {
+      setError('Error al eliminar la columna: ' + err.message);
       console.error(err);
     } finally {
       setIsLoading(false);
@@ -309,16 +480,7 @@ function Views() {
 
   return (
     <div className="container-fluid p-4">
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-light text-2xl font-bold">Vista General</h2>
-        <button 
-          className="create-column-button"
-          onClick={() => setIsModalOpen(true)}
-        >
-          <FontAwesomeIcon icon={faPlus} className="mr-2" />
-          Nueva Columna
-        </button>
-      </div>
+      <h2 className="text-light text-2xl font-bold mb-6">Vista General</h2>
       
       <div className="filters-container">
         <div className="filters-grid">
@@ -361,6 +523,19 @@ function Views() {
                 <h3 className="text-xl font-semibold text-gray-200 mb-4">
                   {column.name}
                 </h3>
+                {column.tasks.length === 0 && (
+                  <motion.button
+                    className="delete-column-button"
+                    onClick={() => handleDeleteColumn(columnId)}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                  >
+                    <FontAwesomeIcon icon={faTimes} />
+                  </motion.button>
+                )}
                 <Droppable droppableId={columnId}>
                   {(provided) => (
                     <div
@@ -383,6 +558,9 @@ function Views() {
                 </Droppable>
               </div>
             ))}
+            
+          {/* Columna para añadir nueva columna */}
+          <CreateColumnButton onClick={() => setIsModalOpen(true)} />
         </div>
       </DragDropContext>
       
