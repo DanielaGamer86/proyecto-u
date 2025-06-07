@@ -98,5 +98,60 @@ export const ViewsModel = {
         } catch (error) {
             throw new Error(`Error al actualizar orden de columna: ${error.message}`);
         }
+    },
+
+    async createColumn(columnName) {
+        try {
+            console.log('Model: Creando nueva columna:', columnName);
+            
+            // Obtener el orden máximo actual
+            const { data: columns, error: getError } = await supabase
+                .from('columnas')
+                .select('orden')
+                .order('orden', { ascending: false })
+                .limit(1);
+            
+            if (getError) throw getError;
+            
+            // Calcular el nuevo orden (máximo + 1 o 1 si no hay columnas)
+            const newOrder = columns && columns.length > 0 ? columns[0].orden + 1 : 1;
+            
+            // Insertar la nueva columna
+            const { data, error } = await supabase
+                .from('columnas')
+                .insert({ nombre: columnName, orden: newOrder })
+                .select();
+            
+            if (error) throw error;
+            
+            console.log('Columna creada correctamente:', data);
+            return data[0];
+        } catch (error) {
+            console.error('Error en createColumn:', error);
+            throw new Error(`Error al crear nueva columna: ${error.message}`);
+        }
+    },
+
+    async deleteColumn(columnId) {
+        try {
+            console.log('Model: Eliminando columna:', columnId);
+            
+            // Extraer el ID numérico si viene en formato 'column-123'
+            const id = columnId.startsWith('column-') ? columnId.replace('column-', '') : columnId;
+            
+            // Eliminar la columna
+            const { error } = await supabase
+                .from('columnas')
+                .delete()
+                .eq('id', id);
+            
+            if (error) throw error;
+            
+            console.log('Columna eliminada correctamente');
+            return true;
+        } catch (error) {
+            console.error('Error en deleteColumn:', error);
+            throw new Error(`Error al eliminar columna: ${error.message}`);
+        }
     }
 };
