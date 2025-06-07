@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFilter, faUser, faBuilding, faTags, faInbox, faSpinner, faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faInbox, faSpinner, faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { ViewsController } from '../../controllers/views/controller_views';
 import './Views.css';
 
@@ -22,105 +22,6 @@ const EmptyColumn = ({ title }) => (
     <p>No hay actividades</p>
   </motion.div>
 );
-
-// Componente para el filtro
-const FilterButton = ({ title, icon, options, selected, onSelect }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0, width: 0 });
-  const buttonRef = useRef(null);
-
-  // Calcular la posición del dropdown cuando se abre
-  const updateDropdownPosition = () => {
-    if (buttonRef.current) {
-      const rect = buttonRef.current.getBoundingClientRect();
-      setDropdownPosition({
-        top: rect.bottom + window.scrollY,
-        left: rect.left + window.scrollX,
-        width: rect.width
-      });
-    }
-  };
-
-  // Actualizar posición al abrir el dropdown
-  useEffect(() => {
-    if (isOpen) {
-      updateDropdownPosition();
-      // Actualizar posición al hacer scroll o redimensionar
-      window.addEventListener('scroll', updateDropdownPosition);
-      window.addEventListener('resize', updateDropdownPosition);
-    }
-    
-    return () => {
-      window.removeEventListener('scroll', updateDropdownPosition);
-      window.removeEventListener('resize', updateDropdownPosition);
-    };
-  }, [isOpen]);
-
-  // Cerrar el dropdown cuando se hace clic fuera de él
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (isOpen && !event.target.closest('.filter-menu')) {
-        setIsOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [isOpen]);
-
-  return (
-    <div className="filter-menu">
-      <button
-        ref={buttonRef}
-        className="filter-button"
-        onClick={() => setIsOpen(!isOpen)}
-      >
-        <FontAwesomeIcon icon={icon} className="mr-2" />
-        <span>{title}</span>
-        {selected.length > 0 && (
-          <span className="selected-count">{selected.length}</span>
-        )}
-      </button>
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div 
-            className="filter-dropdown"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2 }}
-            style={{
-              top: `${dropdownPosition.top}px`,
-              left: `${dropdownPosition.left}px`,
-              width: `${dropdownPosition.width}px`
-            }}
-          >
-            {options.length === 0 ? (
-              <div className="filter-empty">No hay opciones disponibles</div>
-            ) : (
-              options.map((option) => (
-                <motion.div
-                  key={option.id}
-                  className={`filter-option ${selected.includes(option.id) ? 'selected' : ''}`}
-                  onClick={() => onSelect(option.id)}
-                  whileHover={{ scale: 1.03, backgroundColor: 'rgba(59, 130, 246, 0.2)' }}
-                  whileTap={{ scale: 0.97 }}
-                >
-                  <span className="option-name">{option.name}</span>
-                  {selected.includes(option.id) && (
-                    <FontAwesomeIcon icon={faTimes} className="remove-option" />
-                  )}
-                </motion.div>
-              ))
-            )}
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  );
-};
 
 // Componente para la tarjeta de tarea
 const TaskCard = ({ task, index }) => (
@@ -238,7 +139,7 @@ const CreateColumnModal = ({ isOpen, onClose, onCreateColumn }) => {
               initial={{ y: -20, opacity: 0 }}
               animate={{ y: 0, opacity: 1, transition: { delay: 0.1 } }}
             >
-              Crear nueva columna
+             <h2> Crear nueva columna</h2>
             </motion.h3>
             
             <form onSubmit={handleSubmit}>
@@ -248,15 +149,16 @@ const CreateColumnModal = ({ isOpen, onClose, onCreateColumn }) => {
                 animate={{ y: 0, opacity: 1, transition: { delay: 0.2 } }}
               >
                 <label htmlFor="columnName" className="block text-gray-300 mb-4 text-lg font-medium">
-                  Nombre de la columna
+                <h5>Nombre de la columna</h5>
                 </label>
                 <input
                   type="text"
                   id="columnName"
                   value={columnName}
+                  style={{ marginBottom: "30px"}}
                   onChange={(e) => setColumnName(e.target.value)}
                   className="w-full px-5 py-4 bg-gray-700 border border-gray-600 rounded-lg text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 text-lg"
-                  placeholder="Ingrese el nombre de la columna"
+                  placeholder="Ej: Finalizado"
                   autoFocus
                   required
                 />
@@ -270,17 +172,19 @@ const CreateColumnModal = ({ isOpen, onClose, onCreateColumn }) => {
                 <motion.button
                   type="button"
                   onClick={onClose}
+                  style={{ backgroundColor: "rgb(179, 8, 31)", color: "rgba(255, 255, 255, 0.9)" }}
                   className="px-8 py-4 bg-gray-700 text-gray-300 rounded-lg hover:bg-gray-600 transition-colors text-lg font-medium"
-                  whileHover={{ scale: 1.05, backgroundColor: "rgba(75, 85, 99, 0.8)" }}
+                  whileHover={{ scale: 1.05, backgroundColor: "rgba(255, 77, 101, 0.88)", color: "rgba(255, 255, 255, 0.88)" }}
                   whileTap={{ scale: 0.95 }}
                 >
                   Cancelar
                 </motion.button>
                 <motion.button
                   type="submit"
-                  className="px-8 py-4 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition-colors text-lg font-medium"
-                  whileHover={{ scale: 1.05, backgroundColor: "rgba(59, 130, 246, 0.9)" }}
-                  whileTap={{ scale: 0.95 }}
+                  style={{ backgroundColor: "rgb(133, 156, 6)", color: "rgba(255, 255, 255, 0.9)", width: "75px"}}
+                  className="px-8 py-4 bg-blue-600 rounded-lg transition-colors text-lg font-medium"
+                  whileHover={{ scale: 1.05, backgroundColor: "rgba(219, 243, 88, 0.9)" }}
+                  whileTap={{ scale: 0.95}}
                 >
                   Crear
                 </motion.button>
@@ -294,10 +198,6 @@ const CreateColumnModal = ({ isOpen, onClose, onCreateColumn }) => {
 };
 
 function Views() {
-  // Estado para los filtros
-  const [selectedAreas, setSelectedAreas] = useState([]);
-  const [selectedUsers, setSelectedUsers] = useState([]);
-  const [selectedTags, setSelectedTags] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   // Estado para las columnas y tareas
@@ -433,24 +333,6 @@ function Views() {
     }
   };
 
-  // Datos de ejemplo para los filtros
-  const areas = [
-    { id: 'dev', name: 'Desarrollo' },
-    { id: 'design', name: 'Diseño' },
-    { id: 'marketing', name: 'Marketing' }
-  ];
-
-  const users = [
-    { id: 'user1', name: 'Usuario 1' },
-    { id: 'user2', name: 'Usuario 2' },
-    { id: 'user3', name: 'Usuario 3' }
-  ];
-
-  const tags = [
-    { id: 'urgent', name: 'Urgente' },
-    { id: 'bug', name: 'Bug' },
-    { id: 'feature', name: 'Nueva función' }
-  ];
   if (isLoading) {
     return (
       <div className="container-fluid p-4">
@@ -481,38 +363,6 @@ function Views() {
   return (
     <div className="container-fluid p-4">
       <h2 className="text-light text-2xl font-bold mb-6">Vista General</h2>
-      
-      <div className="filters-container">
-        <div className="filters-grid">
-          <FilterButton
-            title="Áreas"
-            icon={faBuilding}
-            options={areas}
-            selected={selectedAreas}
-            onSelect={(id) => setSelectedAreas(prev => 
-              prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]
-            )}
-          />
-          <FilterButton
-            title="Personas"
-            icon={faUser}
-            options={users}
-            selected={selectedUsers}
-            onSelect={(id) => setSelectedUsers(prev => 
-              prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]
-            )}
-          />
-          <FilterButton
-            title="Etiquetas"
-            icon={faTags}
-            options={tags}
-            selected={selectedTags}
-            onSelect={(id) => setSelectedTags(prev => 
-              prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]
-            )}
-          />
-        </div>
-      </div>
       
       <DragDropContext onDragEnd={onDragEnd}>
         <div className="task-columns-container">
