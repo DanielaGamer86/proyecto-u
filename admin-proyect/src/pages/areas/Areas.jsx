@@ -398,17 +398,8 @@ function Areas() {
       <div className="areas-header">
         <div className="header-content">
           <h1 className="areas-title">
-            <FontAwesomeIcon icon={faBuilding} className="mr-3" />
             Gestión de Áreas
           </h1>
-          <button 
-            className="create-area-btn"
-            onClick={openCreateModal}
-            title="Crear nueva área"
-          >
-            <FontAwesomeIcon icon={faPlus} className="mr-2" />
-            Crear Área
-          </button>
         </div>
       </div>
 
