@@ -88,7 +88,7 @@ const AreaModal = ({ isOpen, onClose, onSubmit, editingArea = null }) => {
           <form onSubmit={handleSubmit}>
             <div className="form-group">
               <label htmlFor="nombre" className="form-label">
-                Nombre del Área
+              Nombre del Área
               </label>
               <input
                 type="text"
@@ -396,10 +396,20 @@ function Areas() {
   return (
     <div className="areas-container">
       <div className="areas-header">
-        <h1 className="areas-title">
-          <FontAwesomeIcon icon={faBuilding} className="mr-3" />
-          Gestión de Áreas
-        </h1>
+        <div className="header-content">
+          <h1 className="areas-title">
+            <FontAwesomeIcon icon={faBuilding} className="mr-3" />
+            Gestión de Áreas
+          </h1>
+          <button 
+            className="create-area-btn"
+            onClick={openCreateModal}
+            title="Crear nueva área"
+          >
+            <FontAwesomeIcon icon={faPlus} className="mr-2" />
+            Crear Área
+          </button>
+        </div>
       </div>
 
       {error && (
