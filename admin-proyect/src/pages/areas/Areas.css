@@ -8,11 +8,62 @@
   margin-bottom: 32px;
 }
 
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
 .areas-title {
   color: #f7fafc;
   font-size: 2rem;
   font-weight: bold;
-  margin-bottom: 16px;
+  margin: 0;
+}
+
+.create-area-btn {
+  background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
+  border: none;
+  border-radius: 12px;
+  padding: 12px 24px;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 12px rgba(66, 153, 225, 0.3);
+}
+
+.create-area-btn:hover {
+  background: linear-gradient(135deg, #3182ce 0%, #2c5282 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(66, 153, 225, 0.4);
+}
+
+.create-area-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(66, 153, 225, 0.3);
+}
+
+@media (max-width: 768px) {
+  .header-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .areas-title {
+    font-size: 1.5rem;
+  }
+  
+  .create-area-btn {
+    align-self: stretch;
+    justify-content: center;
+  }
 }
 
 /* Estilos para los filtros */
