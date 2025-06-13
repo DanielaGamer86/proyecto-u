@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInbox, faSpinner, faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { ViewsController } from '../../controllers/views/controller_views';
 import './Views.css';
+import { CardsModel } from '../../models/cards/model_cards';
 
 // Componente para las tarjetas vacías
 const EmptyColumn = ({ title }) => (
@@ -200,41 +201,40 @@ const CreateColumnModal = ({ isOpen, onClose, onCreateColumn }) => {
 function Views() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  // Estado para las columnas y tareas
   const [columns, setColumns] = useState({});
-  // Estado para el modal de crear columna
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Cargar columnas desde la base de datos
   useEffect(() => {
-    loadColumns();
+    loadColumnsAndCards();
   }, []);
 
-  const loadColumns = async () => {
+  const loadColumnsAndCards = async () => {
     try {
-      console.log('Views: Iniciando carga de columnas...');
       setIsLoading(true);
-      const result = await ViewsController.getColumns();
-      console.log('Views: Resultado recibido:', result);
-      
-      if (!result.success) {
-        throw new Error(result.error);
-      }
-
-      // Convertir el array de columnas a un objeto con el formato necesario
-      const columnsObject = result.data.reduce((acc, column) => {
+      const columnsResult = await ViewsController.getColumns();
+      if (!columnsResult.success) throw new Error(columnsResult.error);
+      const columnsArray = columnsResult.data;
+      const cards = await CardsModel.getCards();
+      // Agrupar cards por columna_id
+      const columnsObject = columnsArray.reduce((acc, column) => {
         acc[`column-${column.id}`] = {
           id: column.id,
           name: column.nombre,
           order: column.orden,
-          tasks: [] // Inicialmente sin tareas
+          tasks: cards.filter(card => card.columna_id === column.id).map(card => ({
+            id: String(card.id),
+            title: card.contenido?.titulo || card.titulo || '',
+            description: card.contenido?.descripcion || card.descripcion || '',
+            tags: [],
+            assignee: { name: '', avatar: '' },
+            raw: card
+          }))
         };
         return acc;
       }, {});
-
       setColumns(columnsObject);
     } catch (err) {
-      setError('Error al cargar las columnas: ' + err.message);
+      setError('Error al cargar las columnas y tarjetas: ' + err.message);
       console.error(err);
     } finally {
       setIsLoading(false);
