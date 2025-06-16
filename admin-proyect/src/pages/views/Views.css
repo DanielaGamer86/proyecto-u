@@ -548,3 +548,90 @@ body, html {
     margin: 0;
     padding: 0;
 }
+/* Scrollbar personalizado para columnas y contenedores */
+.task-column::-webkit-scrollbar, .task-columns-container::-webkit-scrollbar {
+  width: 8px;
+  background: transparent;
+}
+
+.task-column::-webkit-scrollbar-thumb, .task-columns-container::-webkit-scrollbar-thumb {
+  background: #d1d1d1;
+  border-radius: 4px;
+  min-height: 40px;
+}
+
+.task-column::-webkit-scrollbar-track, .task-columns-container::-webkit-scrollbar-track {
+  background: #222;
+  border-radius: 4px;
+}
+
+.task-column {
+  scrollbar-width: 2px;
+  scrollbar-color: #d1d1d1 #d1d1d1;
+}
+
+.task-columns-container {
+  scrollbar-width: thin;
+  scrollbar-color: #d1d1d1 #222;
+}
+
+.add-column-container:hover {
+  background: rgba(75, 85, 99, 0.5);
+  border-color: rgba(156, 163, 175, 0.8);
+}
+
+.add-column-icon {
+  color: rgba(156, 163, 175, 0.8);
+  margin-bottom: 15px;
+  background: rgba(59, 130, 246, 0.2);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-column-text {
+  color: rgba(209, 213, 219, 0.8);
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+.delete-column-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(17, 80, 93, 0.7);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.2s ease;
+}
+
+.task-column:hover .delete-column-button {
+  opacity: 1;
+}
+
+.delete-column-button:hover {
+  background: rgba(20, 159, 206, 0.9);
+  transform: scale(1.1);
+}
+
+.delete-column-button:active {
+  transform: scale(0.95);
+}
+body, html {
+    overflow-x: hidden; /* Evitar scroll horizontal en toda la página */
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+}
